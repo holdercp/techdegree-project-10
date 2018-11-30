@@ -3,9 +3,25 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const Sequelize = require('sequelize');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
+
+// db setup
+const sequelize = new Sequelize('library', null, null, {
+  dialect: 'sqlite',
+  storage: './library.db',
+});
+
+sequelize
+  .authenticate()
+  .then(() => {
+    console.log('Database connection successful.');
+  })
+  .catch((err) => {
+    console.error('Database connection failed.', err);
+  });
 
 const app = express();
 
