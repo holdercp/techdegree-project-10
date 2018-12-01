@@ -6,10 +6,19 @@ const router = express.Router();
 /* GET books listing. */
 router.get('/', (req, res, next) => {
   models.Book.findAll()
-    .then(books => res.render('books/list', { title: 'All Books', books }))
+    .then(books => res.render('books/list', { title: 'Books List', books }))
     .catch((err) => {
       console.error(err);
     });
+});
+
+// GET new book
+router.get('/new', (req, res, next) => {
+  res.render('books/new', { title: 'Add Book' });
+});
+
+router.get('/:bookId', (req, res, next) => {
+  res.render('books/view', { title: 'Book: Title Here', bookId: req.params.bookId });
 });
 
 module.exports = router;
