@@ -1,6 +1,31 @@
 extends ../layout
 
 block content
-  ul
-  each book in books
-    li= book.title
+  p
+    a.button(href="/books/new") Add New Book
+  p Filters
+    |
+    |
+    a(href="#") All
+    |
+    | |
+    |
+    a(href="#") Overdue
+    |
+    | |
+    |
+    a(href="#") Checked Out
+  table
+    thead
+      tr
+        th Title
+        th Author
+        th Genre
+        th Year Released
+    tbody
+      each book in books
+        tr
+          td: a(href='#')= book.title
+          td= book.author
+          td= book.genre
+          td= book.first_published

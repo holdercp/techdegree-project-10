@@ -33,7 +33,7 @@ NOTE: You should use Pug to render your views for this project. Avoid using a fr
 ### Books Listing Page
 - [ ] As a librarian, I should be able to filter books by ‘all’ , ‘overdue’ and ‘checked out’ status on the Books Listing Page so I can quickly see the state of the library. Examples: all_books.html, overdue_books.html and checked_books.html.
 - [ ] Include a button to create a new book.
-- [ ] Display a table of books with the following columns:
+- [x] Display a table of books with the following columns:
     - Book Title
     - Author
     - Genre
