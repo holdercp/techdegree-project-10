@@ -10,5 +10,9 @@ html
         li: a(href="books") Books
         li: a(href="/patrons") Patrons
         li: a(href="/loans") Loans
-    main    
-      block content
+    main
+      header
+        block header
+          h1= title
+      section
+        block content
