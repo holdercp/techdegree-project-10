@@ -32,14 +32,14 @@ NOTE: You should use Pug to render your views for this project. Avoid using a fr
 
 ### Books Listing Page
 - [ ] As a librarian, I should be able to filter books by ‘all’ , ‘overdue’ and ‘checked out’ status on the Books Listing Page so I can quickly see the state of the library. Examples: all_books.html, overdue_books.html and checked_books.html.
-- [ ] Include a button to create a new book.
+- [x] Include a button to create a new book.
 - [x] Display a table of books with the following columns:
     - Book Title
     - Author
     - Genre
     - Year Released/First Published
-  - [ ] Table should include the following links:
-    - [ ] Book titles should link to the book's detail page.
+  - [x] Table should include the following links:
+    - Book titles should link to the book's detail page.
 
 ### Add a New Book
 - [ ] As a librarian, I should be able to add a book to the database so that they can be tracked on the system. Example: new_book.html.
