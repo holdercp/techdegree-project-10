@@ -13,8 +13,8 @@ router.get('/', (req, res, next) => {
 });
 
 // GET new book
-router.get('/new', (req, res, next) => {
-  res.render('books/new', { title: 'Add Book' });
+router.get('/add', (req, res, next) => {
+  res.render('books/add', { title: 'Add Book' });
 });
 
 router.get('/:bookId', (req, res, next) => {
