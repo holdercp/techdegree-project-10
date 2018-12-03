@@ -1,10 +1,27 @@
 const express = require('express');
+const Sequelize = require('sequelize');
 const models = require('../models');
 
+const {Op} = Sequelize;
 const router = express.Router();
 
 /* GET books listing. */
 router.get('/', (req, res, next) => {
+  if (req.query.filter) {
+    models.Book.findAll({
+      include: [
+        {
+          model: models.Loan,
+          where: {
+            returnBy: {
+              [Op.gt]:
+            }
+          },
+        },
+      ],
+    });
+  }
+
   models.Book.findAll()
     .then(books => res.render('books/list', { title: 'Books List', books }))
     .catch((err) => {
