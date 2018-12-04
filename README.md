@@ -31,7 +31,7 @@ NOTE: You should use Pug to render your views for this project. Avoid using a fr
 - [x] As a librarian, I should be able to access a main navigation menu from every page of my application. The navigation should include links to the Books Listing page (all_books.html), Patrons Listing page (all_patrons.html) and Loans Listing page (all_loans.html) so I can view this information. See navigation on all pages for examples.
 
 ### Books Listing Page
-- [ ] As a librarian, I should be able to filter books by ‘all’ , ‘overdue’ and ‘checked out’ status on the Books Listing Page so I can quickly see the state of the library. Examples: all_books.html, overdue_books.html and checked_books.html.
+- [x] As a librarian, I should be able to filter books by ‘all’ , ‘overdue’ and ‘checked out’ status on the Books Listing Page so I can quickly see the state of the library. Examples: all_books.html, overdue_books.html and checked_books.html.
 - [x] Include a button to create a new book.
 - [x] Display a table of books with the following columns:
     - Book Title
