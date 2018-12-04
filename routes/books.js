@@ -1,8 +1,9 @@
 const express = require('express');
 const Sequelize = require('sequelize');
+const moment = require('moment');
 const models = require('../models');
 
-const {Op} = Sequelize;
+const { Op } = Sequelize;
 const router = express.Router();
 
 /* GET books listing. */
@@ -13,20 +14,23 @@ router.get('/', (req, res, next) => {
         {
           model: models.Loan,
           where: {
-            returnBy: {
-              [Op.gt]:
-            }
+            [Op.and]: {
+              return_by: {
+                [Op.lt]: moment().format('YYYY-MM-DD'),
+              },
+              returned_on: {
+                [Op.eq]: null,
+              },
+            },
           },
         },
       ],
-    });
+    })
+      .then(books => res.render('books/list', { title: 'Books List', books }))
+      .catch((err) => {
+        console.error(err);
+      });
   }
-
-  models.Book.findAll()
-    .then(books => res.render('books/list', { title: 'Books List', books }))
-    .catch((err) => {
-      console.error(err);
-    });
 });
 
 // GET new book
