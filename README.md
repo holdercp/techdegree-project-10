@@ -43,14 +43,14 @@ NOTE: You should use Pug to render your views for this project. Avoid using a fr
 
 ### Add a New Book
 - [ ] As a librarian, I should be able to add a book to the database so that they can be tracked on the system. Example: new_book.html.
-  - [ ] Display a form that allows the user to add a book, with the following input fields:
+  - [x] Display a form that allows the user to add a book, with the following input fields:
     - Title (required)
     - Author (required)
     - Genre (required)
     - First Published (optional)
 - [ ] When the form is submitted successfully, the book is created in the database, user is redirected to the Books Listing Page and the book appears in the list with updated information.
-- [ ] When form labels are clicked, they should bring focus to corresponding input.
-- [ ] An error is displayed if the form is submitted with blank or invalid data in required fields. For example: “This field is required.”
+- [x] When form labels are clicked, they should bring focus to corresponding input.
+- [x] An error is displayed if the form is submitted with blank or invalid data in required fields. For example: “This field is required.”
 - [ ] To keep your DB safe, use Sequelize model validation for validating your from fields. Don't rely simply on HTML5 built in validation.
 
 ### Book Detail Page
