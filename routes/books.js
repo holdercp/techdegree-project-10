@@ -1,13 +1,15 @@
 const express = require('express');
 const Sequelize = require('sequelize');
 const moment = require('moment');
+const bodyParser = require('body-parser');
 const models = require('../models');
 
 const { Op } = Sequelize;
 const router = express.Router();
+const urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 /* GET books listing. */
-router.get('/', (req, res, next) => {
+router.get('/', (req, res) => {
   let where = {};
   let title = 'All Books';
 
@@ -59,12 +61,24 @@ router.get('/', (req, res, next) => {
     });
 });
 
-// GET new book
-router.get('/add', (req, res, next) => {
-  res.render('books/add', { title: 'Add Book' });
-});
+router
+  .route('/add')
+  // GET new book form
+  .get((req, res) => {
+    res.render('books/add', { title: 'Add Book' });
+  })
+  // POST new book data
+  .post(urlencodedParser, (req, res) => {
+    models.Book.create(req.body)
+      .then(() => {
+        res.redirect('/books');
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  });
 
-router.get('/:bookId', (req, res, next) => {
+router.get('/:bookId', (req, res) => {
   res.render('books/view', { title: 'Book: Title Here', bookId: req.params.bookId });
 });
 

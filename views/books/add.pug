@@ -1,18 +1,18 @@
 extends ../layout
 
 block content
-  form
+  form(action='/books/add', method='post')
     p
       label(for='title') Title
-      input#title(type='text', required)
+      input#title(type='text', name='title', required)
     p
       label(for='author') Author
-      input#author(type='text', required)
+      input#author(type='text', name='author', required)
     p
       label(for='genre') Genre
-      input#genre(type='text', required)
+      input#genre(type='text', name='genre', required)
     p
       label(for='first_published') First Published
-      input#first_published(type='text')
+      input#first_published(type='text', name='published', pattern='[0-9]{4}', placeholder='1992', minlength='4' maxlength='4')
     p
       input(type='submit', value='Create New Book')

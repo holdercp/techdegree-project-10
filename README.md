@@ -48,7 +48,7 @@ NOTE: You should use Pug to render your views for this project. Avoid using a fr
     - Author (required)
     - Genre (required)
     - First Published (optional)
-- [ ] When the form is submitted successfully, the book is created in the database, user is redirected to the Books Listing Page and the book appears in the list with updated information.
+- [x] When the form is submitted successfully, the book is created in the database, user is redirected to the Books Listing Page and the book appears in the list with updated information.
 - [x] When form labels are clicked, they should bring focus to corresponding input.
 - [x] An error is displayed if the form is submitted with blank or invalid data in required fields. For example: “This field is required.”
 - [ ] To keep your DB safe, use Sequelize model validation for validating your from fields. Don't rely simply on HTML5 built in validation.
