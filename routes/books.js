@@ -57,7 +57,8 @@ router.get('/', (req, res) => {
   models.Book.findAll(where)
     .then(books => res.render('books/list', { title, books }))
     .catch((err) => {
-      console.error(err);
+      // TODO: Handle errors
+      res.send(err);
     });
 });
 
@@ -74,7 +75,8 @@ router
         res.redirect('/books');
       })
       .catch((err) => {
-        console.error(err);
+        const messages = err.errors.map(error => error.message);
+        res.render('books/add', { title: 'Add Book', errors: messages });
       });
   });
 
