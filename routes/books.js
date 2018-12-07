@@ -80,8 +80,21 @@ router
       });
   });
 
+// GET book detail/edit form
 router.get('/:bookId', (req, res) => {
-  res.render('books/view', { title: 'Book: Title Here', bookId: req.params.bookId });
+  const { bookId } = req.params;
+  models.Book.findById(bookId)
+    .then((book) => {
+      if (book) {
+        res.render('books/view', { title: book.title, book });
+      } else {
+        // TODO: Handle null book
+        res.send('Book does not exist');
+      }
+    })
+    .catch((err) => {
+      res.send(err);
+    });
 });
 
 module.exports = router;
