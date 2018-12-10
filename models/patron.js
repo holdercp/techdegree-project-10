@@ -1,4 +1,3 @@
-
 module.exports = (sequelize, DataTypes) => {
   const Patron = sequelize.define(
     'Patron',
@@ -10,10 +9,10 @@ module.exports = (sequelize, DataTypes) => {
       library_id: DataTypes.STRING,
       zip_code: DataTypes.INTEGER,
     },
-    {},
+    { timestamps: false, underscored: true },
   );
-  Patron.associate = function (models) {
-    // associations can be defined here
+  Patron.associate = (models) => {
+    Patron.hasOne(models.Loan);
   };
   return Patron;
 };

@@ -1,4 +1,5 @@
 const express = require('express');
+const methodOverride = require('method-override');
 const Sequelize = require('sequelize');
 const moment = require('moment');
 const bodyParser = require('body-parser');
@@ -7,6 +8,8 @@ const models = require('../models');
 const { Op } = Sequelize;
 const router = express.Router();
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
+
+router.use(methodOverride('_method'));
 
 /* GET books listing. */
 router.get('/', (req, res) => {
@@ -83,17 +86,38 @@ router
 // GET book detail/edit form
 router.get('/:bookId', (req, res) => {
   const { bookId } = req.params;
-  models.Book.findById(bookId)
-    .then((book) => {
-      if (book) {
-        res.render('books/view', { title: book.title, book });
+  models.Book.findById(bookId, {
+    include: [
+      {
+        model: models.Loan,
+        include: [{ model: models.Patron, attributes: ['first_name', 'last_name'] }],
+      },
+    ],
+  })
+    .then((results) => {
+      if (results) {
+        res.render('books/view', { title: results.title, results });
       } else {
         // TODO: Handle null book
         res.send('Book does not exist');
       }
     })
     .catch((err) => {
-      res.send(err);
+      // TODO: Handle errors
+      console.error(err);
+    });
+});
+
+// PATCH update to book
+router.patch('/:bookId', urlencodedParser, (req, res) => {
+  models.Book.findById(req.params.bookId)
+    .then(book => book.update(req.body))
+    .then(() => {
+      res.redirect('/books');
+    })
+    .catch((err) => {
+      const messages = err.errors.map(error => error.message);
+      res.render('books/add', { title: 'Add Book', errors: messages });
     });
 });
 

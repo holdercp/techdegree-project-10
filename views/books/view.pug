@@ -5,41 +5,44 @@ block content
     ul
       each error in errors
         li.error= error
-  form(action='/books/:bookId/update', method='post')
+  form(action=`/books/${results.id}?_method=PATCH`, method='post')
     p
       label(for='title') Title
-      input#title(type='text', name='title', value=book.title, required)
+      input#title(type='text', name='title', value=results.title, required)
     p
       label(for='author') Author
-      input#author(type='text', name='author', value=book.author, required)
+      input#author(type='text', name='author', value=results.author, required)
     p
       label(for='genre') Genre
-      input#genre(type='text', name='genre', value=book.genre, required)
+      input#genre(type='text', name='genre', value=results.genre, required)
     p
       label(for='first_published') First Published
-      input#first_published(type='text', name='published', value=book.first_published, pattern='[0-9]{4}', placeholder='1992', minlength='4', maxlength='4')
+      input#first_published(type='text', name='first_published', value=results.first_published, pattern='[0-9]{4}', placeholder='1992', minlength='4', maxlength='4')
     p
       input(type='submit', value='Update Book')
 
   h2 Loan History
-  table
-    thead
-      tr
-        th Book
-        th Patron
-        th Loaned on
-        th Return by
-        th Returned on
-        th Action
-    //- TODO: Make dynamic
-    tbody
-      tr
-        td
-          a(href='book_detail.html') A Brief History of Time
-        td
-          a(href='patron_detail.html') Andrew Chalkley
-        td 2015-12-12
-        td 2015-12-19
-        td
-        td
-          a.button(href='return_book.html') Return Book
+  if results.Loan
+    table
+      thead
+        tr
+          th Book
+          th Patron
+          th Loaned on
+          th Return by
+          th Returned on
+          th Action
+      tbody
+        tr
+          td
+            a(href=`/books/${results.id}`)= results.title
+          td
+            a(href='#')= `${results.Loan.Patron.first_name} ${results.Loan.Patron.last_name}`
+          td= results.Loan.loaned_on
+          td= results.Loan.return_by
+          td= results.Loan.returned_on
+          td
+            if !results.Loan.returned_on
+              a.button(href='#') Return Book
+  else
+    p This book has not been checked out before.

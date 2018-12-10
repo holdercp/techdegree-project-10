@@ -16,6 +16,11 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
     });
+    Loan.belongsTo(models.Patron, {
+      foreignKey: {
+        allowNull: false,
+      },
+    });
   };
   return Loan;
 };

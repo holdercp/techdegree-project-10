@@ -54,24 +54,24 @@ NOTE: You should use Pug to render your views for this project. Avoid using a fr
 - [x] To keep your DB safe, use Sequelize model validation for validating your from fields. Don't rely simply on HTML5 built in validation.
 
 ### Book Detail Page
-- [ ] As a librarian, I should be able to go to a book’s detail page, make edits and view its loan history. Example book_detail.html.
-  - [ ] Display a form allowing the user to update the book, with the following input fields:
+- [x] As a librarian, I should be able to go to a book’s detail page, make edits and view its loan history. Example book_detail.html.
+  - [x] Display a form allowing the user to update the book, with the following input fields:
     - Title (required)
     - Author (required)
     - Genre (required)
     - First Published (optional)
-- [ ] When the form is submitted successfully, the book is updated in the database, user is redirected to the Books Listing Page and the book appears in the list with updated information.
-- [ ] When form labels are clicked, they should bring focus to corresponding input.
-- [ ] An error is displayed if the form is submitted with blank or invalid data in required fields. For example: “This field is required.”
-- [ ] To keep your DB safe, use Sequelize model validation for validating your from fields. Don't rely simply on HTML5 built in validation.
-- [ ] Display a Loan History table with the following columns:
+- [x] When the form is submitted successfully, the book is updated in the database, user is redirected to the Books Listing Page and the book appears in the list with updated information.
+- [x] When form labels are clicked, they should bring focus to corresponding input.
+- [x] An error is displayed if the form is submitted with blank or invalid data in required fields. For example: “This field is required.”
+- [x] To keep your DB safe, use Sequelize model validation for validating your from fields. Don't rely simply on HTML5 built in validation.
+- [x] Display a Loan History table with the following columns:
   - Book
   - Patron
   - Loaned on
   - Return by
   - Returned on
   - Action
-- [ ] Table should include the following links:
+- [x] Table should include the following links:
   - The “Book” field links to the book.
   - The “Patron” field links to the patron who checked out the book.
   - If the book is checked out, the “Action” column contains a link/button to return the book.
