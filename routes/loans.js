@@ -70,23 +70,46 @@ router.get('/', (req, res, next) => {
     });
 });
 
-// router
-//   .route('/add')
-//   // GET new book form
-//   .get((req, res) => {
-//     res.render('books/add', { title: 'Add Book' });
-//   })
-//   // POST new book data
-//   .post(emptyStringToNull, (req, res) => {
-//     models.Book.create(req.body)
-//       .then(() => {
-//         res.redirect('/books');
-//       })
-//       .catch((err) => {
-//         const messages = err.errors.map(error => error.message);
-//         res.render('books/add', { title: 'Add Book', errors: messages });
-//       });
-//   });
+router
+  .route('/add')
+  // GET new loan form
+  .get((req, res) => {
+    const books = models.Book.findAll({
+      include: [
+        {
+          model: models.Loan,
+          where: {
+            [Op.and]: {
+              loaned_on: {
+                [Op.not]: null,
+              },
+              returned_on: {
+                [Op.eq]: null,
+              },
+            },
+          },
+        },
+      ],
+      attributes: ['id', 'title'],
+    });
+
+    const patrons = models.Patron.findAll({ attributes: ['id', 'first_name', 'last_name'] });
+
+    Promise.all([books, patrons]).then((results) => {
+      res.render('loans/add', { title: 'Add Loan', books: results[0], patrons: results[1] });
+    });
+  })
+  // POST new loan data
+  .post(emptyStringToNull, (req, res) => {
+    models.Loan.create(req.body)
+      .then(() => {
+        res.redirect('/loans');
+      })
+      .catch((err) => {
+        const messages = err.errors.map(error => error.message);
+        res.render('loans/add', { title: 'Add Loan', errors: messages });
+      });
+  });
 
 // router
 //   .route('/:bookId')

@@ -1,0 +1,26 @@
+extends ../layout
+
+block content
+  if errors
+    ul
+      each error in errors
+        li.error= error
+  form(action='/loans/add', method='post')
+    p
+      label(for='book_id') Book
+      select#book_id(required)
+        each book in books
+          option(value=`${book.id}`)= book.title
+    p
+      label(for='patron_id') Patron
+      select#patron_id(required)
+        each patron in patrons
+          option(value=`${patron.id}`)= patron.fullName
+    p
+      label(for='loaned_on') Loaned on:
+      input#loaned_on(type='text', required)
+    p
+      label(for='return_by') Return by:
+      input#return_by(type='text', required)
+    p
+      input(type='submit', value='Checkout Book')

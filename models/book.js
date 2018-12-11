@@ -40,7 +40,7 @@ module.exports = (sequelize, DataTypes) => {
     { timestamps: false, underscored: true },
   );
   Book.associate = (models) => {
-    Book.hasOne(models.Loan);
+    Book.hasMany(models.Loan);
   };
   return Book;
 };

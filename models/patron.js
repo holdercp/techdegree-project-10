@@ -9,10 +9,18 @@ module.exports = (sequelize, DataTypes) => {
       library_id: DataTypes.STRING,
       zip_code: DataTypes.INTEGER,
     },
-    { timestamps: false, underscored: true },
+    {
+      timestamps: false,
+      underscored: true,
+      getterMethods: {
+        fullName() {
+          return `${this.first_name} ${this.last_name}`;
+        },
+      },
+    },
   );
   Patron.associate = (models) => {
-    Patron.hasOne(models.Loan);
+    Patron.hasMany(models.Loan);
   };
   return Patron;
 };
