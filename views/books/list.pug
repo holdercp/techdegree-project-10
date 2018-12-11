@@ -1,20 +1,10 @@
 extends ../layout
 
+block append header
+  include ../mixins/header
+  +header('Book')
+
 block content
-  p
-    a.button(href="/books/add") Add New Book
-  p Filters
-    |
-    |
-    a(href="/books") All
-    |
-    | |
-    |
-    a(href="/books?filter=overdue") Overdue
-    |
-    | |
-    |
-    a(href="/books?filter=checked-out") Checked Out
   table
     thead
       tr

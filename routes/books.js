@@ -57,7 +57,9 @@ router.get('/', (req, res, next) => {
   }
 
   models.Book.findAll(where)
-    .then(books => res.render('books/list', { title, books }))
+    .then((books) => {
+      res.render('books/list', { title, books });
+    })
     .catch((err) => {
       next(err);
     });

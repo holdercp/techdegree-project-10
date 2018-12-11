@@ -1,0 +1,27 @@
+extends ../layout
+
+block append header
+  include ../mixins/header
+  +header('Loan')
+
+block content
+  table
+    thead
+      tr
+        th Book
+        th Patron 
+        th Loaned on
+        th Return by 
+        th Returned on
+        th Action
+    tbody
+      each result in results
+        tr
+          td: a(href=`/books/${result.Book.id}`)= result.Book.title
+          td: a(href=`/patrons/${result.Patron.id}`)= `${result.Patron.first_name} ${result.Patron.last_name}` 
+          td= result.loaned_on
+          td= result.return_by
+          td= result.returned_on
+          td
+            if result.returned_on === null 
+              a.button(href='#') Return Book

@@ -21,28 +21,29 @@ block content
     p
       input(type='submit', value='Update Book')
 
-  h2 Loan History
-  if results.Loan
-    table
-      thead
-        tr
-          th Book
-          th Patron
-          th Loaned on
-          th Return by
-          th Returned on
-          th Action
-      tbody
-        tr
-          td
-            a(href=`/books/${results.id}`)= results.title
-          td
-            a(href='#')= `${results.Loan.Patron.first_name} ${results.Loan.Patron.last_name}`
-          td= results.Loan.loaned_on
-          td= results.Loan.return_by
-          td= results.Loan.returned_on
-          td
-            if !results.Loan.returned_on
-              a.button(href='#') Return Book
-  else
-    p This book has not been checked out before.
+  aside
+    h2 Loan History
+    if results.Loan
+      table
+        thead
+          tr
+            th Book
+            th Patron
+            th Loaned on
+            th Return by
+            th Returned on
+            th Action
+        tbody
+          tr
+            td
+              a(href=`/books/${results.id}`)= results.title
+            td
+              a(href='#')= `${results.Loan.Patron.first_name} ${results.Loan.Patron.last_name}`
+            td= results.Loan.loaned_on
+            td= results.Loan.return_by
+            td= results.Loan.returned_on
+            td
+              if !results.Loan.returned_on
+                a.button(href='#') Return Book
+    else
+      p This book has not been checked out before.

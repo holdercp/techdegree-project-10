@@ -77,16 +77,16 @@ NOTE: You should use Pug to render your views for this project. Avoid using a fr
   - If the book is checked out, the “Action” column contains a link/button to return the book.
 
 ### Loan Listing Page
-- [ ] As a librarian, I should be able to filter loans by “All”, “Overdue”, and “Checked Out”, so I can quickly see the state of the loan. Examples all_loans.html, overdue_loans.html and checked_loans.html.
-  - [ ] Include a button that links to the New Loan Page.
-  - [ ] Display a table of loans with the following columns:
+- [x] As a librarian, I should be able to filter loans by “All”, “Overdue”, and “Checked Out”, so I can quickly see the state of the loan. Examples all_loans.html, overdue_loans.html and checked_loans.html.
+  - [x] Include a button that links to the New Loan Page.
+  - [x] Display a table of loans with the following columns:
     - Book title
     - Patron
     - Loaned on
     - Return by
     - Returned on
     - Action
-  - [ ] Table should include the following links:
+  - [x] Table should include the following links:
     - The “Patron” field links to the patron who checked out the book.
     - The “Book title” field links to the book.
     - If the book is checked out, the “Action” column contains a link/button to return the book.
