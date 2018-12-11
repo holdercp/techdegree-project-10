@@ -3,6 +3,7 @@ const methodOverride = require('method-override');
 const Sequelize = require('sequelize');
 const moment = require('moment');
 const models = require('../models');
+const emptyStringToNull = require('../middlewares/emptyStringToNull');
 
 const { Op } = Sequelize;
 const router = express.Router();
@@ -70,7 +71,9 @@ router
     res.render('books/add', { title: 'Add Book' });
   })
   // POST new book data
-  .post((req, res) => {
+  .post(emptyStringToNull, (req, res) => {
+    console.log(req.body);
+
     models.Book.create(req.body)
       .then(() => {
         res.redirect('/books');
