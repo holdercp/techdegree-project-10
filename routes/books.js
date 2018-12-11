@@ -2,12 +2,10 @@ const express = require('express');
 const methodOverride = require('method-override');
 const Sequelize = require('sequelize');
 const moment = require('moment');
-const bodyParser = require('body-parser');
 const models = require('../models');
 
 const { Op } = Sequelize;
 const router = express.Router();
-const urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 router.use(methodOverride('_method'));
 
@@ -72,7 +70,7 @@ router
     res.render('books/add', { title: 'Add Book' });
   })
   // POST new book data
-  .post(urlencodedParser, (req, res) => {
+  .post((req, res) => {
     models.Book.create(req.body)
       .then(() => {
         res.redirect('/books');
@@ -83,42 +81,42 @@ router
       });
   });
 
-// GET book detail/edit form
-router.get('/:bookId', (req, res) => {
-  const { bookId } = req.params;
-  models.Book.findById(bookId, {
-    include: [
-      {
-        model: models.Loan,
-        include: [{ model: models.Patron, attributes: ['first_name', 'last_name'] }],
-      },
-    ],
-  })
-    .then((results) => {
-      if (results) {
-        res.render('books/view', { title: results.title, results });
-      } else {
-        // TODO: Handle null book
-        res.send('Book does not exist');
-      }
+router
+  .route('/:bookId')
+  // GET book detail/edit form
+  .get((req, res, next) => {
+    const { bookId } = req.params;
+    models.Book.findByPk(bookId, {
+      include: [
+        {
+          model: models.Loan,
+          include: [{ model: models.Patron, attributes: ['first_name', 'last_name'] }],
+        },
+      ],
     })
-    .catch((err) => {
-      // TODO: Handle errors
-      console.error(err);
-    });
-});
-
-// PATCH update to book
-router.patch('/:bookId', urlencodedParser, (req, res) => {
-  models.Book.findById(req.params.bookId)
-    .then(book => book.update(req.body))
-    .then(() => {
-      res.redirect('/books');
-    })
-    .catch((err) => {
-      const messages = err.errors.map(error => error.message);
-      res.render('books/add', { title: 'Add Book', errors: messages });
-    });
-});
+      .then((results) => {
+        if (results) {
+          res.render('books/view', { title: results.title, results });
+        } else {
+          // TODO: Handle null book
+          res.send('Book does not exist');
+        }
+      })
+      .catch((err) => {
+        // TODO: Handle errors
+        next(err);
+      });
+  }) // PATCH update to book
+  .patch((req, res) => {
+    models.Book.findByPk(req.params.bookId)
+      .then(book => book.update(req.body))
+      .then(() => {
+        res.redirect('/books');
+      })
+      .catch((err) => {
+        const messages = err.errors.map(error => error.message);
+        res.render('books/add', { title: 'Add Book', errors: messages });
+      });
+  });
 
 module.exports = router;
