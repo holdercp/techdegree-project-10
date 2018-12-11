@@ -11,7 +11,7 @@ const router = express.Router();
 router.use(methodOverride('_method'));
 
 /* GET books listing. */
-router.get('/', (req, res) => {
+router.get('/', (req, res, next) => {
   let where = {};
   let title = 'All Books';
 
@@ -59,8 +59,7 @@ router.get('/', (req, res) => {
   models.Book.findAll(where)
     .then(books => res.render('books/list', { title, books }))
     .catch((err) => {
-      // TODO: Handle errors
-      res.send(err);
+      next(err);
     });
 });
 
@@ -72,8 +71,6 @@ router
   })
   // POST new book data
   .post(emptyStringToNull, (req, res) => {
-    console.log(req.body);
-
     models.Book.create(req.body)
       .then(() => {
         res.redirect('/books');
@@ -101,12 +98,10 @@ router
         if (results) {
           res.render('books/view', { title: results.title, results });
         } else {
-          // TODO: Handle null book
-          res.send('Book does not exist');
+          throw new Error('Book not found!');
         }
       })
       .catch((err) => {
-        // TODO: Handle errors
         next(err);
       });
   }) // PATCH update to book
