@@ -92,6 +92,7 @@ router
       include: [
         {
           model: models.Loan,
+          where: { book_id: Sequelize.col('Book.id') },
           include: [{ model: models.Patron, attributes: ['first_name', 'last_name'] }],
         },
       ],

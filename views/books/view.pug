@@ -23,7 +23,7 @@ block content
 
   aside
     h2 Loan History
-    if results.Loan
+    if results.Loans
       table
         thead
           tr
@@ -34,16 +34,17 @@ block content
             th Returned on
             th Action
         tbody
-          tr
-            td
-              a(href=`/books/${results.id}`)= results.title
-            td
-              a(href='#')= `${results.Loan.Patron.first_name} ${results.Loan.Patron.last_name}`
-            td= results.Loan.loaned_on
-            td= results.Loan.return_by
-            td= results.Loan.returned_on
-            td
-              if !results.Loan.returned_on
-                a.button(href='#') Return Book
+          each loan in results.Loans
+            tr
+              td
+                a(href=`/books/${results.id}`)= results.title
+              td
+                a(href='#')= loan.Patron.fullName
+              td= loan.loaned_on
+              td= loan.return_by
+              td= loan.returned_on
+              td
+                if !loan.returned_on
+                  a.button(href='#') Return Book
     else
       p This book has not been checked out before.
