@@ -8,19 +8,19 @@ block content
   form(action='/loans/add', method='post')
     p
       label(for='book_id') Book
-      select#book_id(required)
+      select#book_id(name="book_id", required)
         each book in books
           option(value=`${book.id}`)= book.title
     p
       label(for='patron_id') Patron
-      select#patron_id(required)
+      select#patron_id(name="patron_id", required)
         each patron in patrons
           option(value=`${patron.id}`)= patron.fullName
     p
       label(for='loaned_on') Loaned on:
-      input#loaned_on(type='text', required)
+      input#loaned_on(type='date', name="loaned_on", value= date.now, required)
     p
       label(for='return_by') Return by:
-      input#return_by(type='text', required)
+      input#return_by(type='date', name="return_by", value= date.nextWeek, required)
     p
       input(type='submit', value='Checkout Book')

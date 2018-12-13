@@ -96,7 +96,19 @@ router
     const patrons = models.Patron.findAll({ attributes: ['id', 'first_name', 'last_name'] });
 
     Promise.all([books, patrons]).then((results) => {
-      res.render('loans/add', { title: 'Add Loan', books: results[0], patrons: results[1] });
+      // Populate date inputs with today's date and a week from now
+      const date = {
+        now: moment().format('YYYY-MM-DD'),
+        nextWeek: moment()
+          .add(7, 'days')
+          .format('YYYY-MM-DD'),
+      };
+      res.render('loans/add', {
+        title: 'Add Loan',
+        books: results[0],
+        patrons: results[1],
+        date,
+      });
     });
   })
   // POST new loan data
