@@ -74,22 +74,41 @@ router
   .route('/add')
   // GET new loan form
   .get((req, res, next) => {
-    const booksQ = models.Book.findAll({
+    const returnedBooksQ = models.Book.findAll({
       include: [
         {
           model: models.Loan,
-          where: { loaned_on: null },
+          where: {
+            returned_on: { [Op.not]: null },
+          },
         },
       ],
       attributes: ['id', 'title'],
     });
 
+    const booksWithoutLoanQ = models.Book.findAll({
+      include: [
+        {
+          model: models.Loan,
+          where: { book_id: Sequelize.col('book.id') },
+          attributes: ['id'],
+        },
+      ],
+    }).then((booksWithLoan) => {
+      const bookIdsWithLoan = booksWithLoan.map(book => book.id);
+      return models.Book.findAll({
+        where: {
+          id: { [Op.notIn]: bookIdsWithLoan },
+        },
+      });
+    });
+
     const patronsQ = models.Patron.findAll({ attributes: ['id', 'first_name', 'last_name'] });
 
-    Promise.all([booksQ, patronsQ])
+    Promise.all([returnedBooksQ, booksWithoutLoanQ, patronsQ])
       .then((results) => {
-        const books = results[0];
-        const patrons = results[1];
+        const books = [...results[0], ...results[1]];
+        const patrons = results[2];
         // Populate date inputs with today's date and a week from now
         const date = {
           now: moment().format('YYYY-MM-DD'),
