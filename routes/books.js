@@ -88,18 +88,18 @@ router
   // GET book detail/edit form
   .get((req, res, next) => {
     const { bookId } = req.params;
-    models.Book.findByPk(bookId, {
-      include: [
-        {
-          model: models.Loan,
-          where: { book_id: Sequelize.col('Book.id') },
-          include: [{ model: models.Patron, attributes: ['first_name', 'last_name'] }],
-        },
-      ],
-    })
+    const bookQ = models.Book.findByPk(bookId);
+    const loansQ = models.Loan.findAll({
+      where: { book_id: bookId },
+      include: [{ model: models.Patron, attributes: ['first_name', 'last_name'] }],
+    });
+
+    Promise.all([bookQ, loansQ])
       .then((results) => {
-        if (results) {
-          res.render('books/view', { title: results.title, results });
+        const book = results[0];
+        const loans = results[1];
+        if (results[0]) {
+          res.render('books/view', { title: book.title, book, loans });
         } else {
           throw new Error('Book not found!');
         }
