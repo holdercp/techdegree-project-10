@@ -73,43 +73,38 @@ router.get('/', (req, res, next) => {
 router
   .route('/add')
   // GET new loan form
-  .get((req, res) => {
-    const books = models.Book.findAll({
+  .get((req, res, next) => {
+    const booksQ = models.Book.findAll({
       include: [
         {
           model: models.Loan,
-          where: {
-            [Op.and]: {
-              loaned_on: {
-                [Op.not]: null,
-              },
-              returned_on: {
-                [Op.eq]: null,
-              },
-            },
-          },
+          where: { loaned_on: null },
         },
       ],
       attributes: ['id', 'title'],
     });
 
-    const patrons = models.Patron.findAll({ attributes: ['id', 'first_name', 'last_name'] });
+    const patronsQ = models.Patron.findAll({ attributes: ['id', 'first_name', 'last_name'] });
 
-    Promise.all([books, patrons]).then((results) => {
-      // Populate date inputs with today's date and a week from now
-      const date = {
-        now: moment().format('YYYY-MM-DD'),
-        nextWeek: moment()
-          .add(7, 'days')
-          .format('YYYY-MM-DD'),
-      };
-      res.render('loans/add', {
-        title: 'Add Loan',
-        books: results[0],
-        patrons: results[1],
-        date,
-      });
-    });
+    Promise.all([booksQ, patronsQ])
+      .then((results) => {
+        const books = results[0];
+        const patrons = results[1];
+        // Populate date inputs with today's date and a week from now
+        const date = {
+          now: moment().format('YYYY-MM-DD'),
+          nextWeek: moment()
+            .add(7, 'days')
+            .format('YYYY-MM-DD'),
+        };
+        res.render('loans/add', {
+          title: 'Add Loan',
+          books,
+          patrons,
+          date,
+        });
+      })
+      .catch(err => next(err));
   })
   // POST new loan data
   .post(emptyStringToNull, (req, res) => {
