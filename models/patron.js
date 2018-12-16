@@ -2,12 +2,16 @@ module.exports = (sequelize, DataTypes) => {
   const Patron = sequelize.define(
     'Patron',
     {
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+      },
       first_name: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
           notEmpty: true,
-          notNull: true,
         },
       },
       last_name: {
@@ -15,7 +19,6 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           notEmpty: true,
-          notNull: true,
         },
       },
       address: {
@@ -23,7 +26,6 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           notEmpty: true,
-          notNull: true,
         },
       },
       email: {
@@ -31,7 +33,6 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           isEmail: true,
-          notNull: true,
         },
       },
       library_id: {
@@ -39,7 +40,6 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           notEmpty: true,
-          notNull: true,
         },
       },
       zip_code: {
@@ -47,8 +47,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           isInt: true,
-          notNull: true,
-          len: [0, 5],
+          len: 5,
         },
       },
     },

@@ -116,7 +116,7 @@ NOTE: You should use Pug to render your views for this project. Avoid using a fr
   - [x] To keep your DB safe, use Sequelize model validation for validating your from fields. Don't rely simply on HTML5 built in validation.
 
 ### Patron Listing Page
-- [ ] As a librarian, I should be able to list all patrons so I can find and access library-goers easily. Example: all_patrons.html.
+- [x] As a librarian, I should be able to list all patrons so I can find and access library-goers easily. Example: all_patrons.html.
   - [x] Include a button to create a new patron.
   - [x] Display a table of Patrons with the following columns:
     - Name
@@ -124,30 +124,30 @@ NOTE: You should use Pug to render your views for this project. Avoid using a fr
     - Email
     - Library ID
     - Zip Code
-  - [ ] Table should include the following links:
+  - [x] Table should include the following links:
     - Names should link to that patron's detail page.
 
 ### Patron Detail Page
-- [ ] As a librarian, I should be able to go to a patron's detail page, make edits and view their loan history. Example patron_detail.html.
-  - [ ] Display a form for listing patron’s information with the following required fields:
+- [x] As a librarian, I should be able to go to a patron's detail page, make edits and view their loan history. Example patron_detail.html.
+  - [x] Display a form for listing patron’s information with the following required fields:
     - First Name
     - Last Name
     - Address
     - Email
     - Library ID
     - Zip Code
-  - [ ] When the form is submitted successfully, the patron should be updated in the database and the user should be redirected to the patron page, where updated info should be visible.
-  - [ ] When form labels are clicked, they should bring focus to corresponding input.
-  - [ ] An error is displayed if the form is submitted with blank or invalid data in required fields. For example: “This field is required.”
-  - [ ] To keep your DB safe, use Sequelize model validation for validating your from fields. Don't rely simply on HTML5 built in validation.
-  - [ ] Display a Loan History table for current patron with the following columns:
+  - [x] When the form is submitted successfully, the patron should be updated in the database and the user should be redirected to the patron page, where updated info should be visible.
+  - [x] When form labels are clicked, they should bring focus to corresponding input.
+  - [x] An error is displayed if the form is submitted with blank or invalid data in required fields. For example: “This field is required.”
+  - [x] To keep your DB safe, use Sequelize model validation for validating your from fields. Don't rely simply on HTML5 built in validation.
+  - [x] Display a Loan History table for current patron with the following columns:
     - Book
     - Patron
     - Loaned on
     - Return by
     - Returned on
     - Action
-  - [ ] Table should include the following links:
+  - [x] Table should include the following links:
     - Books should link back to the book detail page.
     - Patron’s name links to the corresponding patron detail page.
     - If the book is checked out, the “Action” column contains a link/button to return the book.

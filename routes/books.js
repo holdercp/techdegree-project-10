@@ -99,7 +99,7 @@ router
         const book = results[0];
         const loans = results[1];
         if (results[0]) {
-          res.render('books/view', { title: book.title, book, loans });
+          res.render('books/view', { title: 'Book Detail', book, loans });
         } else {
           throw new Error('Book not found!');
         }
@@ -109,14 +109,15 @@ router
       });
   }) // PATCH update to book
   .patch((req, res) => {
-    models.Book.findByPk(req.params.bookId)
+    const { bookId } = req.params;
+    models.Book.findByPk(bookId)
       .then(book => book.update(req.body))
       .then(() => {
         res.redirect('/books');
       })
       .catch((err) => {
         const messages = err.errors.map(error => error.message);
-        res.render('books/add', { title: 'Add Book', errors: messages });
+        res.render(`books/${bookId}`, { title: 'Book Detail', errors: messages });
       });
   });
 

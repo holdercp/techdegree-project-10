@@ -1,10 +1,8 @@
 extends ../layout
 
 block content
-  if errors
-    ul
-      each error in errors
-        li.error= error
+  include ../includes/errors.pug
+
   form(action=`/books/${book.id}?_method=PATCH`, method='post')
     p
       label(for='title') Title
@@ -45,6 +43,6 @@ block content
               td= loan.returned_on
               td
                 if !loan.returned_on
-                  a.button(href='#') Return Book
+                  a.button(href=`/loans/${loan.id}`) Return Book
     else
       p This book has not been checked out before.

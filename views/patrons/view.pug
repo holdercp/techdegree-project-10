@@ -1,0 +1,54 @@
+extends ../layout
+
+block content
+  include ../includes/errors.pug
+
+  form(action=`/patrons/${patron.id}?_method=PATCH`, method='post')
+    p
+      label(for='first_name') First Name
+      input#first_name(name='first_name', type='text', value=`${patron.first_name}`, required)
+    p
+      label(for='last_name') Last Name
+      input#last_name(name='last_name', type='text', value=`${patron.last_name}`, required)
+    p
+      label(for='address')  Address
+      input#address(name='address', type='text', value=`${patron.address}`, required)
+    p
+      label(for='email') Email
+      input#email(name='email', type='email', value=`${patron.email}`, required)
+    p
+      label(for='library_id') Library ID
+      input#library_id(name='library_id', type='text', value=`${patron.library_id}`, required)
+    p
+      label(for='zip_code') Zip Code
+      input#zip_code(name='zip_code', type='text', value=`${patron.zip_code}`, maxlength='5', pattern='[0-9]{5}', required)
+    p
+      input(type='submit', value='Update Patron')
+
+  aside
+    h2 Loan History
+    if loans.length > 0
+      table
+        thead
+          tr
+            th Book
+            th Patron
+            th Loaned on
+            th Return by
+            th Returned on
+            th Action
+        tbody
+          each loan in loans
+            tr
+              td
+                a(href=`/books/${loan.Book.id}`)= loan.Book.title
+              td
+                a(href=`/patrons/${patron.id}`)= patron.fullName
+              td= loan.loaned_on
+              td= loan.return_by
+              td= loan.returned_on
+              td
+                if !loan.returned_on
+                  a.button(href=`/loans/${loan.id}`) Return Book
+    else
+      p This patron has not checked out any books before.

@@ -11,7 +11,6 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
         validate: {
-          notNull: true,
           isInt: true,
         },
       },
@@ -19,7 +18,6 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
         validate: {
-          notNull: true,
           isInt: true,
         },
       },
@@ -28,7 +26,6 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validations: {
           isDate: true,
-          notNull: true,
         },
       },
       return_by: {
@@ -36,7 +33,6 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validations: {
           isDate: true,
-          notNull: true,
         },
       },
       returned_on: {
