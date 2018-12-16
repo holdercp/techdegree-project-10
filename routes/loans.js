@@ -74,6 +74,9 @@ router
   .route('/add')
   // GET new loan form
   .get((req, res, next) => {
+    // The "loanable" books should only be ones that are not currently checked out
+    // This means books that have a Loan with a non-null returned_on date
+    // And books that don't have a Loan associated with them at all
     const returnedBooksQ = models.Book.findAll({
       include: [
         {
@@ -86,6 +89,7 @@ router
       attributes: ['id', 'title'],
     });
 
+    // First get the id's of books with a Loan association
     const booksWithoutLoanQ = models.Book.findAll({
       include: [
         {
@@ -94,6 +98,7 @@ router
           attributes: ['id'],
         },
       ],
+      // Then get the books whose id's are not included in that returned query
     }).then((booksWithLoan) => {
       const bookIdsWithLoan = booksWithLoan.map(book => book.id);
       return models.Book.findAll({
