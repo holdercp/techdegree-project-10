@@ -106,14 +106,14 @@ NOTE: You should use Pug to render your views for this project. Avoid using a fr
   - [x] To keep your DB safe, use Sequelize model validation for validating your from fields. Don't rely simply on HTML5 built in validation.
 
 ### Return Book Page
-- [ ] As a librarian, I should be able to return a book so we know the current state of a book in our library. Example:return_book.html.
-  - [ ] Display book title, patron who borrowed the book, the loaned on and return by dates.
-  - [ ] Include one required returned_on form field. It should be pre-populated with today’s date. Example: 2016-10-20.
-  - [ ] Include a button to return the book.
-  - [ ] When the form is submitted successfully, the book should be updated in the database and the user should be redirect to the loans listing page, where updated info should be visible.
-  - [ ] When form labels are clicked, they should bring focus to corresponding input.
-  - [ ] An error is displayed if the form is submitted with blank or invalid data in required fields. For example: “This field is required.”
-  - [ ] To keep your DB safe, use Sequelize model validation for validating your from fields. Don't rely simply on HTML5 built in validation.
+- [x] As a librarian, I should be able to return a book so we know the current state of a book in our library. Example:return_book.html.
+  - [x] Display book title, patron who borrowed the book, the loaned on and return by dates.
+  - [x] Include one required returned_on form field. It should be pre-populated with today’s date. Example: 2016-10-20.
+  - [x] Include a button to return the book.
+  - [x] When the form is submitted successfully, the book should be updated in the database and the user should be redirect to the loans listing page, where updated info should be visible.
+  - [x] When form labels are clicked, they should bring focus to corresponding input.
+  - [x] An error is displayed if the form is submitted with blank or invalid data in required fields. For example: “This field is required.”
+  - [x] To keep your DB safe, use Sequelize model validation for validating your from fields. Don't rely simply on HTML5 built in validation.
 
 ### Patron Listing Page
 - [ ] As a librarian, I should be able to list all patrons so I can find and access library-goers easily. Example: all_patrons.html.

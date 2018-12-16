@@ -78,7 +78,7 @@ router
     // This means books where their most recent Loan has a non-null value for returned_on
     // And books that don't have a Loan associated with them at all
 
-    // Get the most recent Loans grouped by book_id where returned_on is not null
+    // Get the most recent Loans grouped by book_id where returned_on is not null (i.e. Books that have been returned)
     // id was used for ordering since the supplied library.db did not use timestamps on its records
     const returnedBooksQ = models.Loan.findAll({
       order: [['id', 'DESC']],
@@ -100,6 +100,7 @@ router
       });
     });
 
+    // Get books without a Loan
     // First get the id's of books with a Loan association
     const booksWithoutLoanQ = models.Book.findAll({
       include: [
@@ -153,40 +154,50 @@ router
       });
   });
 
-// router
-//   .route('/:bookId')
-//   // GET book detail/edit form
-//   .get((req, res, next) => {
-//     const { bookId } = req.params;
-//     models.Book.findByPk(bookId, {
-//       include: [
-//         {
-//           model: models.Loan,
-//           include: [{ model: models.Patron, attributes: ['first_name', 'last_name'] }],
-//         },
-//       ],
-//     })
-//       .then((results) => {
-//         if (results) {
-//           res.render('books/view', { title: results.title, results });
-//         } else {
-//           throw new Error('Book not found!');
-//         }
-//       })
-//       .catch((err) => {
-//         next(err);
-//       });
-//   }) // PATCH update to book
-//   .patch((req, res) => {
-//     models.Book.findByPk(req.params.bookId)
-//       .then(book => book.update(req.body))
-//       .then(() => {
-//         res.redirect('/books');
-//       })
-//       .catch((err) => {
-//         const messages = err.errors.map(error => error.message);
-//         res.render('books/add', { title: 'Add Book', errors: messages });
-//       });
-//   });
+router
+  .route('/:loanId')
+  // GET loan return form
+  .get((req, res, next) => {
+    const { loanId } = req.params;
+    models.Loan.findByPk(loanId, {
+      include: [
+        {
+          model: models.Book,
+          attributes: ['title'],
+        },
+        {
+          model: models.Patron,
+          attributes: ['first_name', 'last_name'],
+        },
+      ],
+    })
+      .then((loan) => {
+        if (loan) {
+          // Populate date inputs with today's date
+          const date = {
+            now: moment().format('YYYY-MM-DD'),
+          };
+
+          res.render('loans/return', { title: 'Return Book', loan, date });
+        } else {
+          throw new Error('Book Loan not found!');
+        }
+      })
+      .catch((err) => {
+        next(err);
+      });
+  }) // PATCH update to loan
+  .patch((req, res) => {
+    const { loanId } = req.params;
+    models.Loan.findByPk(loanId)
+      .then(loan => loan.update(req.body))
+      .then(() => {
+        res.redirect('/loans');
+      })
+      .catch((err) => {
+        const messages = err.errors.map(error => error.message);
+        res.render(`loans/${loanId}`, { title: 'Return Book', errors: messages });
+      });
+  });
 
 module.exports = router;

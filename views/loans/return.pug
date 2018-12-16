@@ -1,0 +1,21 @@
+extends ../layout
+
+block content
+  p.
+    #[strong Book Title:] #{loan.Book.title}
+  p.
+    #[strong Loaned By:] #{loan.Patron.fullName}
+  p.
+    #[strong Loaned On:] #{loan.loaned_on}
+  p.
+    #[strong Return By:] #{loan.return_by}
+  if loan.returned_on
+    p(class='success').
+      #[strong Returned On:] #{loan.returned_on}
+  else
+    form(method='post', action=`/loans/${loan.id}?_method=PATCH`)
+      p
+        label(for='returned_on') Returned on:
+        input#returned_on(type='date', name='returned_on', value=date.now, required)
+      p
+        input(type='submit', value='Return Book')

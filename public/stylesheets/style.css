@@ -96,3 +96,7 @@ input[type=text], select {
 .error {
   color: tomato;
 }
+
+.success {
+  color: seagreen;
+}

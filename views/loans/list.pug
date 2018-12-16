@@ -24,4 +24,4 @@ block content
           td= result.returned_on
           td
             if result.returned_on === null 
-              a.button(href='#') Return Book
+              a.button(href=`/loans/${result.id}`) Return Book
