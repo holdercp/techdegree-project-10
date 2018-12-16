@@ -1,16 +1,17 @@
-mixin header(resource)
+mixin header(resource, filter)
   - var resourceLC = resource.toLowerCase()
   p
     a.button(href=`/${resourceLC}s/add`)= `Add New ${resource}`
-  p Filters
-    |
-    |
-    a(href=`/${resourceLC}s`) All
-    |
-    | |
-    |
-    a(href=`/${resourceLC}s?filter=overdue`) Overdue
-    |
-    | |
-    |
-    a(href=`/${resourceLC}s?filter=checked-out`) Checked Out
+  if filter === true
+    p Filters
+      |
+      |
+      a(href=`/${resourceLC}s`) All
+      |
+      | |
+      |
+      a(href=`/${resourceLC}s?filter=overdue`) Overdue
+      |
+      | |
+      |
+      a(href=`/${resourceLC}s?filter=checked-out`) Checked Out

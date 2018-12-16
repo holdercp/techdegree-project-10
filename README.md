@@ -117,8 +117,8 @@ NOTE: You should use Pug to render your views for this project. Avoid using a fr
 
 ### Patron Listing Page
 - [ ] As a librarian, I should be able to list all patrons so I can find and access library-goers easily. Example: all_patrons.html.
-  - [ ] Include a button to create a new patron.
-  - [ ] Display a table of Patrons with the following columns:
+  - [x] Include a button to create a new patron.
+  - [x] Display a table of Patrons with the following columns:
     - Name
     - Address
     - Email
@@ -153,23 +153,23 @@ NOTE: You should use Pug to render your views for this project. Avoid using a fr
     - If the book is checked out, the “Action” column contains a link/button to return the book.
 
 ### New Patron Page
-- [ ] As a librarian, I should be able to create new library patrons so they can use the facilities. Example: new_patron.html.
-  - [ ] Display a form for listing patron’s information with the following required fields:
+- [x] As a librarian, I should be able to create new library patrons so they can use the facilities. Example: new_patron.html.
+  - [x] Display a form for listing patron’s information with the following required fields:
     - First Name
     - Last Name
     - Address
     - Email
     - Library ID
     - Zip Code
-  - [ ] When the form is submitted successfully, a patron should be created in the database and the user should be redirected to the patrons listing page, where updated info should be visible.
-  - [ ] When form labels are clicked, they should bring focus to corresponding input.
-  - [ ] An error is displayed if the form is submitted with blank or invalid data in required fields. For example: “This field is required.”
-  - [ ] To keep your DB safe, use Sequelize model validation for validating your from fields. Don't rely simply on HTML5 built in validation.
+  - [x] When the form is submitted successfully, a patron should be created in the database and the user should be redirected to the patrons listing page, where updated info should be visible.
+  - [x] When form labels are clicked, they should bring focus to corresponding input.
+  - [x] An error is displayed if the form is submitted with blank or invalid data in required fields. For example: “This field is required.”
+  - [x] To keep your DB safe, use Sequelize model validation for validating your from fields. Don't rely simply on HTML5 built in validation.
 ### Required fields and Forms
-- [ ] As a librarian, I should be able to be notified if any of the required fields in any given form have any missing data, so that I can correct the information.
-- [ ] For example, if the first name field is empty on the new patron form and the librarian submits it, the librarian should see: “First Name is required”.
-- [ ] To keep your DB safe, use Sequelize model validation for validating your from fields. Don't rely simply on HTML5 built in validation.
-- [ ] When form labels are clicked, they should bring focus to corresponding input.
+- [x] As a librarian, I should be able to be notified if any of the required fields in any given form have any missing data, so that I can correct the information.
+- [x] For example, if the first name field is empty on the new patron form and the librarian submits it, the librarian should see: “First Name is required”.
+- [x] To keep your DB safe, use Sequelize model validation for validating your from fields. Don't rely simply on HTML5 built in validation.
+- [x] When form labels are clicked, they should bring focus to corresponding input.
 
 ## Additional Requirements
 - [ ] Include pagination for both the patrons listing and books listing pages.

@@ -1,10 +1,7 @@
 extends ../layout
 
 block content
-  if errors
-    ul
-      each error in errors
-        li.error= error
+  include includes/errors.pug
   form(action='/loans/add', method='post')
     p
       label(for='book_id') Book

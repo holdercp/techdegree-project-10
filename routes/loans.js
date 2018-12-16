@@ -186,7 +186,7 @@ router
       .catch((err) => {
         next(err);
       });
-  }) // PATCH update to loan
+  }) // PATCH update to loan (return book)
   .patch((req, res) => {
     const { loanId } = req.params;
     models.Loan.findByPk(loanId)
