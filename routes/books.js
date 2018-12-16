@@ -91,7 +91,7 @@ router
     const bookQ = models.Book.findByPk(bookId);
     const loansQ = models.Loan.findAll({
       where: { book_id: bookId },
-      include: [{ model: models.Patron, attributes: ['first_name', 'last_name'] }],
+      include: [{ model: models.Patron, attributes: ['id', 'first_name', 'last_name'] }],
     });
 
     Promise.all([bookQ, loansQ])
