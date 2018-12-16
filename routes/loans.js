@@ -75,18 +75,29 @@ router
   // GET new loan form
   .get((req, res, next) => {
     // The "loanable" books should only be ones that are not currently checked out
-    // This means books that have a Loan with a non-null returned_on date
+    // This means books where their most recent Loan has a non-null value for returned_on
     // And books that don't have a Loan associated with them at all
-    const returnedBooksQ = models.Book.findAll({
-      include: [
-        {
-          model: models.Loan,
-          where: {
-            returned_on: { [Op.not]: null },
-          },
+
+    // Get the most recent Loans grouped by book_id where returned_on is not null
+    // id was used for ordering since the supplied library.db did not use timestamps on its records
+    const returnedBooksQ = models.Loan.findAll({
+      order: [['id', 'DESC']],
+      limit: 1,
+      group: ['book_id'],
+      having: {
+        returned_on: {
+          [Op.not]: null,
         },
-      ],
-      attributes: ['id', 'title'],
+      },
+      attributes: ['book_id'],
+      // Now get all the books associated with those Loans
+    }).then((returnedLoans) => {
+      const returnedLoanIds = returnedLoans.map(loan => loan.book_id);
+      return models.Book.findAll({
+        where: {
+          id: { [Op.in]: returnedLoanIds },
+        },
+      });
     });
 
     // First get the id's of books with a Loan association
