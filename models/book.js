@@ -32,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: true,
         validate: {
-          isNumeric: true,
+          isInt: true,
           len: 4,
         },
       },
