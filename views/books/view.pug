@@ -39,7 +39,7 @@ block content
               td
                 a(href=`/books/${book.id}`)= book.title
               td
-                a(href=`/patrons/${patron.id}`)= loan.Patron.fullName
+                a(href=`/patrons/${loan.Patron.id}`)= loan.Patron.fullName
               td= loan.loaned_on
               td= loan.return_by
               td= loan.returned_on
