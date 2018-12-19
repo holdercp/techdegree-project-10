@@ -4,6 +4,8 @@ const Sequelize = require('sequelize');
 const moment = require('moment');
 const models = require('../models');
 const emptyStringToNull = require('../middlewares/emptyStringToNull');
+const pagination = require('../middlewares/pagination');
+const config = require('../config/config');
 
 const { Op } = Sequelize;
 const router = express.Router();
@@ -12,53 +14,62 @@ router.use(methodOverride('_method'));
 
 /* GET books listing. */
 router.get('/', (req, res, next) => {
-  let where = {};
+  const q = {
+    limit: config.perPage,
+  };
   let title = 'All Books';
+
+  const currentPage = req.query.page;
+
+  if (currentPage && parseInt(currentPage, 0)) {
+    q.offset = currentPage * config.perPage - config.perPage;
+  }
 
   // Set title and where clause if there is a filter query
   if (req.query.filter === 'overdue') {
-    where = {
-      include: [
-        {
-          model: models.Loan,
-          where: {
-            [Op.and]: {
-              return_by: {
-                [Op.lt]: moment().format('YYYY-MM-DD'),
-              },
-              returned_on: {
-                [Op.eq]: null,
-              },
+    q.include = [
+      {
+        model: models.Loan,
+        where: {
+          [Op.and]: {
+            return_by: {
+              [Op.lt]: moment().format('YYYY-MM-DD'),
+            },
+            returned_on: {
+              [Op.eq]: null,
             },
           },
         },
-      ],
-    };
+      },
+    ];
     title = 'Overdue Books';
   } else if (req.query.filter === 'checked-out') {
-    where = {
-      include: [
-        {
-          model: models.Loan,
-          where: {
-            [Op.and]: {
-              loaned_on: {
-                [Op.not]: null,
-              },
-              returned_on: {
-                [Op.eq]: null,
-              },
+    q.include = [
+      {
+        model: models.Loan,
+        where: {
+          [Op.and]: {
+            loaned_on: {
+              [Op.not]: null,
+            },
+            returned_on: {
+              [Op.eq]: null,
             },
           },
         },
-      ],
-    };
+      },
+    ];
     title = 'Checked Out Books';
   }
 
-  models.Book.findAll(where)
+  models.Book.findAndCountAll(q)
     .then((books) => {
-      res.render('books/list', { title, books });
+      let pages;
+      if (books.count > config.perPage) {
+        const totalPages = Math.ceil(books.count / config.perPage);
+        pages = pagination(req, totalPages, parseInt(currentPage, 0) || 1);
+      }
+      res.render('books/list', { books: books.rows, title, pages });
     })
     .catch((err) => {
       next(err);

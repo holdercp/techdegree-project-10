@@ -1,0 +1,10 @@
+p
+  if pages.prevPage
+    a(href=`${pages.prevPage}`) Prev
+  else
+    span Prev
+  |    
+  if pages.nextPage
+    a(href=`${pages.nextPage}`) Next
+  else
+    span Next
