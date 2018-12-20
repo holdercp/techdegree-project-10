@@ -3,6 +3,16 @@ You've been tasked with creating a library management system for a small library
 
 You'll be given static HTML designs, a set of requirements and the existing SQLite database. You'll be required to implement a dynamic website using Express, Pug, and the SQL ORM Sequelize.
 
+## Get Up and Running
+1. Run `npm install` from your project root
+1. `npm start` will spin up an Express server
+
+This project doesn't not use migrations since it's small and just for run; the db will sync when the server starts.
+
+The project is set up to connect to a SQLite db named `library.db` in the root of the project. The copy that came with the project files is included since this is just a small project.
+
+The per page limit for db results can be adjusted in the `config/config.js` file by setting the `perPage` property. It is set to 10 by default. You will need to restart the server to see this change.
+
 ## Requirements
 ### Models
 - [x] The library.db file should contain 3 tables. Create a Sequelize model for a books table, a patrons table, and a loans table. There are no timestamps.
