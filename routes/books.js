@@ -14,18 +14,20 @@ router.use(methodOverride('_method'));
 
 /* GET books listing. */
 router.get('/', (req, res, next) => {
+  // Initialize query object and default title
   const q = {
     limit: config.perPage,
   };
   let title = 'All Books';
+  let term = '';
 
+  // Get current page if paginated and set the offset for the query
   const currentPage = req.query.page;
-
   if (currentPage && parseInt(currentPage, 0)) {
     q.offset = currentPage * config.perPage - config.perPage;
   }
 
-  // Set title and where clause if there is a filter query
+  // If there is a filter query add that to the query and set the title
   if (req.query.filter === 'overdue') {
     q.include = [
       {
@@ -62,6 +64,19 @@ router.get('/', (req, res, next) => {
     title = 'Checked Out Books';
   }
 
+  // If there is a search term, add that to the query
+  if (req.query.search) {
+    term = req.query.search;
+    q.where = {
+      [Op.or]: [
+        { title: { [Op.like]: `%${term}%` } },
+        { author: { [Op.like]: `%${term}%` } },
+        { genre: { [Op.like]: `%${term}%` } },
+        { first_published: { [Op.like]: `%${term}%` } },
+      ],
+    };
+  }
+
   models.Book.findAndCountAll(q)
     .then((books) => {
       let pages;
@@ -69,7 +84,12 @@ router.get('/', (req, res, next) => {
         const totalPages = Math.ceil(books.count / config.perPage);
         pages = pagination(req, totalPages, parseInt(currentPage, 0) || 1);
       }
-      res.render('books/list', { books: books.rows, title, pages });
+      res.render('books/list', {
+        books: books.rows,
+        title,
+        pages,
+        searchTerm: term,
+      });
     })
     .catch((err) => {
       next(err);

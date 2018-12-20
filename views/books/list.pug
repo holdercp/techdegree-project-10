@@ -5,6 +5,9 @@ block append header
   +header('Book', true)
 
 block content
+  include ../mixins/searchForm
+  +searchForm('books')
+  
   table
     thead
       tr
@@ -19,6 +22,9 @@ block content
           td= book.author
           td= book.genre
           td= book.first_published
+      else
+        tr
+          td There's nothing here :(
 
   if pages
     include ../includes/_pagination
