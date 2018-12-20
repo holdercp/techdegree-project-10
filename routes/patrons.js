@@ -1,20 +1,33 @@
 const express = require('express');
 const methodOverride = require('method-override');
-const Sequelize = require('sequelize');
-const moment = require('moment');
 const models = require('../models');
 const emptyStringToNull = require('../middlewares/emptyStringToNull');
+const pagination = require('../middlewares/pagination');
+const config = require('../config/config');
 
-const { Op } = Sequelize;
 const router = express.Router();
 
 router.use(methodOverride('_method'));
 
 /* GET loans listing. */
 router.get('/', (req, res, next) => {
-  models.Patron.findAll()
+  const q = {
+    limit: config.perPage,
+  };
+
+  const currentPage = req.query.page;
+  if (currentPage && parseInt(currentPage, 0)) {
+    q.offset = currentPage * config.perPage - config.perPage;
+  }
+
+  models.Patron.findAndCountAll(q)
     .then((patrons) => {
-      res.render('patrons/list', { title: 'All Patrons', patrons });
+      let pages;
+      if (patrons.count > config.perPage) {
+        const totalPages = Math.ceil(patrons.count / config.perPage);
+        pages = pagination(req, totalPages, parseInt(currentPage, 0) || 1);
+      }
+      res.render('patrons/list', { title: 'All Patrons', patrons: patrons.rows, pages });
     })
     .catch((err) => {
       next(err);

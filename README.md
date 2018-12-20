@@ -172,7 +172,7 @@ NOTE: You should use Pug to render your views for this project. Avoid using a fr
 - [x] When form labels are clicked, they should bring focus to corresponding input.
 
 ## Additional Requirements
-- [ ] Include pagination for both the patrons listing and books listing pages.
+- [x] Include pagination for both the patrons listing and books listing pages.
 - [ ] Include search fields for both the patrons listing and books listing pages.
   - first_name, last_name,library_id, etc for patrons
   - title, author, genre, etc for books
