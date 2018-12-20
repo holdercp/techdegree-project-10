@@ -12,7 +12,7 @@ router.use(methodOverride('_method'));
 
 /* GET loans listing. */
 router.get('/', (req, res, next) => {
-  const include = {
+  const q = {
     include: [
       {
         model: models.Book,
@@ -24,46 +24,38 @@ router.get('/', (req, res, next) => {
       },
     ],
   };
-
-  let where = {};
   let title = 'All Loans';
 
   // Set title and where clause if there is a filter query
   if (req.query.filter === 'overdue') {
-    where = {
-      where: {
-        [Op.and]: {
-          return_by: {
-            [Op.lt]: moment().format('YYYY-MM-DD'),
-          },
-          returned_on: {
-            [Op.eq]: null,
-          },
+    q.where = {
+      [Op.and]: {
+        return_by: {
+          [Op.lt]: moment().format('YYYY-MM-DD'),
+        },
+        returned_on: {
+          [Op.eq]: null,
         },
       },
     };
     title = 'Overdue Loans';
   } else if (req.query.filter === 'checked-out') {
-    where = {
-      where: {
-        [Op.and]: {
-          loaned_on: {
-            [Op.not]: null,
-          },
-          returned_on: {
-            [Op.eq]: null,
-          },
+    q.where = {
+      [Op.and]: {
+        loaned_on: {
+          [Op.not]: null,
+        },
+        returned_on: {
+          [Op.eq]: null,
         },
       },
     };
     title = 'Checked Out Loans';
   }
 
-  const query = Object.assign(include, where);
-
-  models.Loan.findAll(query)
-    .then((results) => {
-      res.render('loans/list', { title, results });
+  models.Loan.findAll(q)
+    .then((loans) => {
+      res.render('loans/list', { title, loans });
     })
     .catch((err) => {
       next(err);

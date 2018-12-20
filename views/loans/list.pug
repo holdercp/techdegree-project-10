@@ -15,13 +15,13 @@ block content
         th Returned on
         th Action
     tbody
-      each result in results
+      each loan in loans
         tr
-          td: a(href=`/books/${result.Book.id}`)= result.Book.title
-          td: a(href=`/patrons/${result.Patron.id}`)= `${result.Patron.first_name} ${result.Patron.last_name}` 
-          td= result.loaned_on
-          td= result.return_by
-          td= result.returned_on
+          td: a(href=`/books/${loan.Book.id}`)= loan.Book.title
+          td: a(href=`/patrons/${loan.Patron.id}`)= `${loan.Patron.first_name} ${loan.Patron.last_name}` 
+          td= loan.loaned_on
+          td= loan.return_by
+          td= loan.returned_on
           td
-            if result.returned_on === null 
-              a.button(href=`/loans/${result.id}`) Return Book
+            if loan.returned_on === null 
+              a.button(href=`/loans/${loan.id}`) Return Book
