@@ -1,5 +1,5 @@
 mixin searchForm(resource)
-  form(action=`/${resouce}`, method="get")
+  form(action=`/${resource}`, method="get")
     label(for="search") Search
     input(type="text" name="search" id="search" value= searchTerm)
     button(type="submit") Do Magic
